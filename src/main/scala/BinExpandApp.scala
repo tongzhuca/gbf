@@ -35,6 +35,8 @@ object BinExpandApp
     .load(dataPath)
 
   def appendToFile(r: Row) = {
+    // TODO: ts1 and ts2 can start with 0
+    // a quick fix is to ignore this record
     var ts1 = r.getDouble(1).toInt.toString
     var ts2 = r.getDouble(2).toInt.toString
     ts1.length match {

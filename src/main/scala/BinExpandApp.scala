@@ -42,7 +42,7 @@ object BinExpandApp
         ts2 = ts2 + "00"
       case 5 => ts1 = ts1 + "0"
         ts2 = ts2 + "0"
-      case 7 | 8 | 9 | 10 => ts1 = ts1.substring(0, 6)
+      case _ if ts1.length > 6 => ts1 = ts1.substring(0, 6)
         ts2 = ts2.substring(0, 6)
       case _ => "wrong one: " + println(r)
     }

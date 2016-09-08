@@ -34,34 +34,28 @@ object BinExpandApp
     .option("delimiter", DELIMITER)
     .load(dataPath)
 
-  //  dfOriginalBinInfo.printSchema()
-
   def appendToFile(r: Row) = {
-    try {
-      var ts1 = r.getDouble(1).toInt.toString
-      var ts2 = r.getDouble(2).toInt.toString
-      ts1.length match {
-        case 4 => ts1 = ts1 + "00"
-          ts2 = ts2 + "00"
-        case 5 => ts1 = ts1 + "0"
-          ts2 = ts2 + "0"
-        case 7 | 8 | 9 | 10 => ts1 = ts1.substring(0, 6)
-          ts2 = ts2.substring(0, 6)
-        case _ => //"wrong one: " + println(r)
-      }
+    var ts1 = r.getDouble(1).toInt.toString
+    var ts2 = r.getDouble(2).toInt.toString
+    ts1.length match {
+      case 4 => ts1 = ts1 + "00"
+        ts2 = ts2 + "00"
+      case 5 => ts1 = ts1 + "0"
+        ts2 = ts2 + "0"
+      case 7 | 8 | 9 | 10 => ts1 = ts1.substring(0, 6)
+        ts2 = ts2.substring(0, 6)
+      case _ => "wrong one: " + println(r)
+    }
 
-      val r1 = ts1.toInt
-      val r2 = ts2.toInt
+    val r1 = ts1.toInt
+    val r2 = ts2.toInt
 
-      var a = 0L
-      for (a <- r1 to r2) {
-        val all = a :: r.toSeq.toList
-        val ss = all.mkString(",") + "\n"
+    var a = 0L
+    for (a <- r1 to r2) {
+      val all = a :: r.toSeq.toList
+      val ss = all.mkString(",") + "\n"
 
-        FileUtils.write(binResultFile, ss, true)
-      }
-    } catch {
-      case x: Throwable =>
+      FileUtils.write(binResultFile, ss, true)
     }
   }
 

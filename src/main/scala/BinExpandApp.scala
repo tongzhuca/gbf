@@ -52,7 +52,7 @@ object BinExpandApp
 
     var a = 0L
     for (a <- r1 to r2) {
-      val all = a :: r.toSeq.toList
+      val all = a :: r.toSeq.toList.drop(3)
       val ss = all.mkString(",") + "\n"
 
       FileUtils.write(binResultFile, ss, true)
